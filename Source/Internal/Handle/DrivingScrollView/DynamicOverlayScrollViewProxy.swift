@@ -43,7 +43,7 @@ private extension UIView {
                         coordinate: UICoordinateSpace) -> UIScrollView? {
         let frame = coordinate.convert(bounds, from: self)
         guard area.intersects(frame) else { return nil }
-        if let result = self as? UIScrollView {
+        if let result = self as? UIScrollView, result.accessibilityIdentifier == String.scrollViewIdentifier {
             return result
         }
         for subview in subviews {

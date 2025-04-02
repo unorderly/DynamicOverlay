@@ -8,6 +8,12 @@
 
 import SwiftUI
 
+import SwiftUIIntrospect
+
+extension String {
+    static let scrollViewIdentifier: String = "drivingScrollView"
+}
+
 struct ActiveOverlayAreaViewModifier<Key: PreferenceKey>: ViewModifier where Key.Value == ActivatedOverlayArea {
 
     let key: Key.Type
@@ -22,5 +28,8 @@ struct ActiveOverlayAreaViewModifier<Key: PreferenceKey>: ViewModifier where Key
                 )
             }
         )
+        .introspect(.scrollView, on: .iOS(.v16, .v17, .v18)) { (scrollView: UIScrollView) in
+            scrollView.accessibilityIdentifier = String.scrollViewIdentifier
+        }
     }
 }
