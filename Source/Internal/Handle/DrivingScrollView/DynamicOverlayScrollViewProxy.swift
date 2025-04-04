@@ -41,8 +41,8 @@ private extension UIView {
 
     func findScrollView(in area: ActivatedOverlayArea,
                         coordinate: UICoordinateSpace) -> UIScrollView? {
-        let frame = coordinate.convert(bounds, from: self)
-        guard area.intersects(frame) else { return nil }
+        // let frame = coordinate.convert(bounds, from: self)
+        // guard area.intersects(frame) else { return nil }
         if let result = self as? UIScrollView, result.accessibilityIdentifier == String.scrollViewIdentifier {
             return result
         }

@@ -169,6 +169,15 @@ extension OverlayContainerCoordinator: OverlayContainerViewControllerDelegate {
                                         transitioningDelegateForOverlay overlayViewController: UIViewController) -> OverlayTransitioningDelegate? {
         self
     }
+
+    func overlayContainerViewController(_ containerViewController: OverlayContainerViewController,
+                                        overlayTranslationFunctionForOverlay overlayViewController: UIViewController) -> OverlayTranslationFunction? {
+        let function = RubberBandOverlayTranslationFunction()
+        // function.factor = 0.1
+        function.bouncesAtMinimumHeight = false
+        function.bouncesAtMaximumHeight = false
+        return function
+    }
 }
 
 extension OverlayContainerCoordinator: OverlayTransitioningDelegate {
