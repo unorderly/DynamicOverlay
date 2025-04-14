@@ -67,7 +67,11 @@ class OverlayContainerCoordinator {
 
     // MARK: - Public
 
-    func move(_ container: OverlayContainerViewController, to state: State, animated: Bool) {
+    func move(_ container: OverlayContainerViewController,
+              to state: State,
+              animated: Bool,
+              animateOverlayOverride: Bool? = nil
+    ) {
         if container.viewControllers.isEmpty {
             container.viewControllers = [background, content]
         }
@@ -85,7 +89,8 @@ class OverlayContainerCoordinator {
             container.invalidateNotchHeights()
         }
         if let index = state.notchIndex, changes.contains(.index) {
-            container.moveOverlay(toNotchAt: index, animated: animated)
+            let shouldAnimateOverlay = animateOverlayOverride ?? animated
+            container.moveOverlay(toNotchAt: index, animated: shouldAnimateOverlay)
         }
         if changes.contains(.scrollView) {
             CATransaction.setCompletionBlock { [weak container] in

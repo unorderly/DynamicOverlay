@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import OverlayContainer
 
 public extension View {
 
@@ -15,8 +16,8 @@ public extension View {
     /// - parameter content: the content of the overlay.
     ///
     /// - returns: A view with a dynamic overlay added above this view.
-    func dynamicOverlay<Content: View>(_ content: Content) -> some View {
-        modifier(AddDynamicOverlayModifier(overlay: content))
+    func dynamicOverlay<Content: View>(_ content: Content, animateOverlayOverride: Bool? = nil) -> some View {
+        modifier(AddDynamicOverlayModifier(overlay: content, animateOverlayOverride: animateOverlayOverride))
     }
 
     /// Sets the overlay behavior for dynamic overlays within this view.
@@ -34,13 +35,15 @@ public extension View {
 public struct AddDynamicOverlayModifier<Overlay: View>: ViewModifier {
 
     let overlay: Overlay
+    let animateOverlayOverride: Bool?
 
     // MARK: - ViewModifier
 
     public func body(content: Content) -> some View {
         OverlayContainerDynamicOverlayView(
             background: content,
-            content: overlay
+            content: overlay,
+            animateOverlayOverride: animateOverlayOverride
         )
     }
 }

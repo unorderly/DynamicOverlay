@@ -21,6 +21,7 @@ struct OverlayContainerRepresentableAdaptor<Content: View, Background: View> {
     let passiveContainer: OverlayContainerPassiveContainer
     let content: Content
     let background: Background
+    let animateOverlayOverride: Bool?
 
     private let style: OverlayContainerViewController.OverlayStyle = .expandableHeight
 
@@ -53,7 +54,8 @@ struct OverlayContainerRepresentableAdaptor<Content: View, Background: View> {
         context.coordinator.move(
             container,
             to: containerState,
-            animated: context.transaction.animation != nil
+            animated: context.transaction.animation != nil,
+            animateOverlayOverride: animateOverlayOverride
         )
     }
 }
