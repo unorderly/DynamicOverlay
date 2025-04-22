@@ -28,10 +28,17 @@ struct MapRootView: View {
     // MARK: - View
 
     var body: some View {
-        background
-            .dynamicOverlay(overlay)
-            .dynamicOverlayBehavior(behavior)
-            .ignoresSafeArea()
+        GeometryReader { proxy in
+            background
+                .safeAreaPadding(proxy.safeAreaInsets)
+                .dynamicOverlay(overlay
+                    .safeAreaPadding(proxy.safeAreaInsets))
+                .dynamicOverlayBehavior(behavior)
+                .ignoresSafeArea()
+        }
+            .safeAreaInset(edge: .bottom, alignment: .center, spacing: 20) {
+                Color.red.frame(height: 40)
+            }
     }
 
     // MARK: - Private
