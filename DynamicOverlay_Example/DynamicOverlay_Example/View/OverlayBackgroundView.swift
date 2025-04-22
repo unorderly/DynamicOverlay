@@ -11,7 +11,7 @@ import SwiftUI
 struct OverlayBackgroundView: View {
 
     var body: some View {
-        Color(.systemBackground)
+        Color.green
             .cornerRadius(8.0, corners: [.topLeft, .topRight])
             .shadow(color: Color.black.opacity(0.3), radius: 8.0)
     }

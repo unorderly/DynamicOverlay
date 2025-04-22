@@ -25,8 +25,9 @@ struct OverlayView: View {
         VStack(spacing: 0.0) {
             header.draggable()
             list
+            Color.blue.frame(height: 20)
         }
-        .background(OverlayBackgroundView())
+        .background(Color.green.ignoresSafeArea())
     }
 
     // MARK: - Private
@@ -47,6 +48,7 @@ struct OverlayView: View {
             }
         }
         .listStyle(GroupedListStyle())
+        .scrollContentBackground(.hidden)
     }
 
     private var header: some View {
