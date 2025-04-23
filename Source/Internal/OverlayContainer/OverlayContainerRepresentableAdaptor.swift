@@ -22,17 +22,18 @@ struct OverlayContainerRepresentableAdaptor<Content: View, Background: View> {
     let content: Content
     let background: Background
     let animateOverlayOverride: Bool?
+    let ignoresKeyboard: Bool
 
     private let style: OverlayContainerViewController.OverlayStyle = .expandableHeight
 
     // MARK: - UIViewControllerRepresentable
 
     func makeCoordinator() -> OverlayContainerCoordinator {
-        let contentController = UIHostingController(rootView: content)
+        let contentController = UIHostingController(rootView: content, ignoreSafeArea: ignoresKeyboard)
         contentController.view.backgroundColor = .clear
         contentController.view.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         contentController.view.setContentHuggingPriority(.defaultLow, for: .vertical)
-        let backgroundController = UIHostingController(rootView: background)
+        let backgroundController = UIHostingController(rootView: background, ignoreSafeArea: ignoresKeyboard)
         backgroundController.view.backgroundColor = .clear
         return OverlayContainerCoordinator(
             style: style,

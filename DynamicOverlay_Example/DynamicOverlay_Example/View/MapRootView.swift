@@ -25,20 +25,26 @@ struct MapRootView: View {
     @SwiftUI.State
     private var state = State()
 
+    @SwiftUI.State private var text = ""
     // MARK: - View
 
     var body: some View {
-        GeometryReader { proxy in
-            background
-                .safeAreaPadding(proxy.safeAreaInsets)
-                .dynamicOverlay(overlay
-                    .safeAreaPadding(proxy.safeAreaInsets))
-                .dynamicOverlayBehavior(behavior)
-                .ignoresSafeArea()
-        }
-            .safeAreaInset(edge: .bottom, alignment: .center, spacing: 20) {
-                Color.red.frame(height: 40)
+        HStack {
+            TextField("Test", text: $text)
+                .frame(width: 200)
+            GeometryReader { proxy in
+                background
+                    .safeAreaPadding(proxy.safeAreaInsets)
+                    .dynamicOverlay(overlay
+                        .safeAreaPadding(proxy.safeAreaInsets))
+                    .dynamicOverlayBehavior(behavior)
+                    .ignoresSafeArea()
             }
+            .ignoresSafeArea(.keyboard)
+            .safeAreaInset(edge: .bottom, alignment: .center, spacing: 20) {
+                Color.purple.frame(height: 40)
+            }
+        }
     }
 
     // MARK: - Private
@@ -52,11 +58,11 @@ struct MapRootView: View {
                 return .fractional(0.3)
             }
         }
-        .disable(.min, state.isEditing)
-        .notchChange($state.notch)
-        .onTranslation { translation in
-            state.progress = translation.progress
-        }
+//        .disable(.min, state.isEditing)
+//        .notchChange($state.notch)
+//        .onTranslation { translation in
+//            state.progress = translation.progress
+//        }
     }
 
     private var background: some View {

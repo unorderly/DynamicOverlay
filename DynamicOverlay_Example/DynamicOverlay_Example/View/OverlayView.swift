@@ -23,11 +23,11 @@ struct OverlayView: View {
 
     var body: some View {
         VStack(spacing: 0.0) {
-            header.draggable()
-            list
-            Color.blue.frame(height: 20)
+            Color.red.frame(height: 100)
+            Color.blue
+            Color.green.frame(height: 100)
         }
-        .background(Color.green.ignoresSafeArea())
+        .background(Color.yellow.ignoresSafeArea())
     }
 
     // MARK: - Private

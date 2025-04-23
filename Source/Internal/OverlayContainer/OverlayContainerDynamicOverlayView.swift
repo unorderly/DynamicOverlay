@@ -26,6 +26,7 @@ struct OverlayContainerDynamicOverlayView<Background: View, Content: View>: View
     let content: Content
 
     let animateOverlayOverride: Bool?
+    let ignoresKeyboard: Bool
 
     // MARK: - View
 
@@ -36,7 +37,8 @@ struct OverlayContainerDynamicOverlayView<Background: View, Content: View>: View
                 passiveContainer: passiveContainer,
                 content: OverlayContentHostingView(),
                 background: background,
-                animateOverlayOverride: animateOverlayOverride
+                animateOverlayOverride: animateOverlayOverride,
+                ignoresKeyboard: ignoresKeyboard
             )
         )
         .overlayContent(content.overlayCoordinateSpace())
