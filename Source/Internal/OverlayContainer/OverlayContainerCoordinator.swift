@@ -74,6 +74,7 @@ class OverlayContainerCoordinator {
               animated: Bool,
               animateOverlayOverride: Bool? = nil
     ) {
+        container.additionalSafeAreaInsets = self.outsideSafeAreaInsets - container.view.safeAreaInsets
         if container.viewControllers.isEmpty {
             container.viewControllers = [background, content]
         }
@@ -114,17 +115,11 @@ extension OverlayContainerCoordinator: OverlayContainerViewControllerDelegate {
     // MARK: - OverlayContainerViewControllerDelegate
 
     func numberOfNotches(in containerViewController: OverlayContainerViewController) -> Int {
-        containerViewController.additionalSafeAreaInsets = .init(top: self.outsideSafeAreaInsets.top - containerViewController.view.safeAreaInsets.top,
-                                                                 left: self.outsideSafeAreaInsets.left - containerViewController.view.safeAreaInsets.left,
-                                                                 bottom: self.outsideSafeAreaInsets.bottom - containerViewController.view.safeAreaInsets.bottom,
-                                                                 right: self.outsideSafeAreaInsets.right - containerViewController.view.safeAreaInsets.right)
-        let safeArea = containerViewController.view.safeAreaInsets
-        let additionalSafearea = containerViewController.additionalSafeAreaInsets
-        print("safeArea: \(safeArea), additionalSafeArea: \(additionalSafearea), outsideSafeArea: \(outsideSafeAreaInsets)")
+        let safeAreaInsets = containerViewController.view.safeAreaInsets
         indexMapper.reload(
             layout: state.layout,
-            availableHeight: containerViewController.availableSpace - safeArea.bottom - safeArea.top,
-            safeAreaInsets:  safeArea,
+            availableHeight: containerViewController.availableSpace - safeAreaInsets.bottom - safeAreaInsets.top,
+            buttomInset:  safeAreaInsets.bottom,
         )
         return indexMapper.numberOfOverlayIndexes()
     }
@@ -157,7 +152,9 @@ extension OverlayContainerCoordinator: OverlayContainerViewControllerDelegate {
             velocity: transitionCoordinator.velocity,
             heightForNotchIndex: { transitionCoordinator.height(forNotchAt: $0) }
         )
+
         withTransaction(transaction) { [weak passiveContainer] in
+            self.content.additionalSafeAreaInsets = .with(bottom: self.content.view.bounds.height - translation.height)
             passiveContainer?.onTranslation?(translation)
         }
     }

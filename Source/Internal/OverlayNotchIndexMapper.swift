@@ -14,7 +14,7 @@ class OverlayNotchIndexMapper {
     private var overlayIndexToHeight: [Int: CGFloat] = [:]
     private var dynamicIndexToOverlayIndex: [Int: Int] = [:]
 
-    func reload(layout: OverlayContainerLayout, availableHeight: CGFloat, safeAreaInsets: UIEdgeInsets) {
+    func reload(layout: OverlayContainerLayout, availableHeight: CGFloat, buttomInset: CGFloat) {
         overlayIndexToDynamicIndex = [:]
         overlayIndexToHeight = [:]
         dynamicIndexToOverlayIndex = [:]
@@ -22,7 +22,7 @@ class OverlayNotchIndexMapper {
             height(for: $0.value, availableHeight: availableHeight) < height(for: $1.value, availableHeight: availableHeight)
         })
         sortedIndexes.enumerated().forEach{ overlayIndex, dynamicValue in
-            overlayIndexToHeight[overlayIndex] = height(for: dynamicValue.value, availableHeight: availableHeight) + safeAreaInsets.bottom
+            overlayIndexToHeight[overlayIndex] = height(for: dynamicValue.value, availableHeight: availableHeight) + buttomInset
             dynamicIndexToOverlayIndex[dynamicValue.key] = overlayIndex
             overlayIndexToDynamicIndex[overlayIndex] = dynamicValue.key
         }

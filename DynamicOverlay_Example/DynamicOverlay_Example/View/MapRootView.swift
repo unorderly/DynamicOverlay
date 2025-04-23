@@ -32,33 +32,22 @@ struct MapRootView: View {
         HStack {
             TextField("Test", text: $text)
                 .frame(width: 200)
-            GeometryReader { outerProxy in
-                GeometryReader { proxy in
-                    let _ = print("size: \(proxy.size), safeAreaInsets: \(proxy.safeAreaInsets)")
-                    background
-                    //                    .safeAreaPadding(proxy.safeAreaInsets)
-                        .dynamicOverlay(overlay
-                                        //                        .safeAreaPadding(proxy.safeAreaInsets)
-                                        , ignoresKeyboard: true,
-                                        addionalSafeAreaInsets: proxy.safeAreaInsets)
-                        .dynamicOverlayBehavior(
-                            MagneticNotchOverlayBehavior<Notch> { notch in
-                                switch notch {
-                                case .max:
-                                    return .topOffset(100)
-                                case .min:
-                                    return .absolute(200)
-                                }
-                            }
-                        )
-                    //                    .safeAreaPadding(proxy.safeAreaInsets)
-                        .ignoresSafeArea()
-                }
-                .ignoresSafeArea(.keyboard, edges: .all)
+            background
+                .dynamicOverlay(overlay,
+                                ignoresKeyboard: true)
+                .dynamicOverlayBehavior(
+                    MagneticNotchOverlayBehavior<Notch> { notch in
+                        switch notch {
+                        case .max:
+                            return .topOffset(100)
+                        case .min:
+                            return .absolute(200)
+                        }
+                    }
+                )
                 .safeAreaInset(edge: .bottom, alignment: .center, spacing: 0) {
                     Color.purple.opacity(0.5).frame(height: 40)
                 }
-            }
         }
     }
 
@@ -99,6 +88,9 @@ struct MapRootView: View {
                 withAnimation { state.notch = .min }
             }
         }
-        .drivingScrollView()
+        .onGeometryChange(for: CGSize.self, of: \.size) { newValue in
+            print("size: \(newValue)")
+        }
+//        .drivingScrollView()
     }
 }

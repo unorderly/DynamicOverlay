@@ -23,7 +23,7 @@ struct OverlayContainerRepresentableAdaptor<Content: View, Background: View> {
     let background: Background
     let animateOverlayOverride: Bool?
     let ignoresKeyboard: Bool
-    let addionalSafeAreaInsets: EdgeInsets
+    let safeAreaInsets: EdgeInsets
 
     private let style: OverlayContainerViewController.OverlayStyle = .expandableHeight
 
@@ -54,10 +54,7 @@ struct OverlayContainerRepresentableAdaptor<Content: View, Background: View> {
 
     func updateUIViewController(_ container: OverlayContainerViewController,
                                 context: Context) {
-        context.coordinator.outsideSafeAreaInsets = .init(top: addionalSafeAreaInsets.top,
-                                                          left: addionalSafeAreaInsets.leading,
-                                                          bottom: addionalSafeAreaInsets.bottom,
-                                                          right: addionalSafeAreaInsets.trailing)
+        context.coordinator.outsideSafeAreaInsets = self.safeAreaInsets.uiEdgeInsets
         context.coordinator.move(
             container,
             to: containerState,

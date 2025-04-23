@@ -27,7 +27,7 @@ struct OverlayContainerDynamicOverlayView<Background: View, Content: View>: View
 
     let animateOverlayOverride: Bool?
     let ignoresKeyboard: Bool
-    let addionalSafeAreaInsets: EdgeInsets
+    let safeAreaInsets: EdgeInsets
 
     // MARK: - View
 
@@ -40,7 +40,7 @@ struct OverlayContainerDynamicOverlayView<Background: View, Content: View>: View
                 background: background,
                 animateOverlayOverride: animateOverlayOverride,
                 ignoresKeyboard: ignoresKeyboard,
-                addionalSafeAreaInsets: addionalSafeAreaInsets
+                safeAreaInsets: safeAreaInsets
             )
         )
         .overlayContent(content.overlayCoordinateSpace())
