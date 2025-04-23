@@ -95,21 +95,22 @@ extension MagneticNotchOverlayBehavior: DynamicOverlayBehavior {
 }
 
 /// A dimension of a notch.
-public struct NotchDimension: Hashable {
-
-    let type: ValueType
-    let value: Double
+public enum NotchDimension: Hashable {
+    case absolute(Double)
+    case fractional(Double)
+    case topOffset(Double)
+//    case bottomOffset(Double)
 }
 
 public extension NotchDimension {
 
-    /// Creates a dimension with an absolute point value.
-    static func absolute(_ value: Double) -> NotchDimension {
-        NotchDimension(type: .absolute, value: value)
-    }
-
-    /// Creates a dimension that is computed as a fraction of the height of the overlay parent view.
-    static func fractional(_ value: Double) -> NotchDimension {
-        NotchDimension(type: .fractional, value: value)
-    }
+//    /// Creates a dimension with an absolute point value.
+//    static func absolute(_ value: Double) -> NotchDimension {
+//        NotchDimension(type: .absolute, value: value)
+//    }
+//
+//    /// Creates a dimension that is computed as a fraction of the height of the overlay parent view.
+//    static func fractional(_ value: Double) -> NotchDimension {
+//        NotchDimension(type: .fractional, value: value)
+//    }
 }

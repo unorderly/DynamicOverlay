@@ -33,14 +33,25 @@ struct MapRootView: View {
             TextField("Test", text: $text)
                 .frame(width: 200)
             GeometryReader { proxy in
+                let _ = print("size: \(proxy.size), safeAreaInsets: \(proxy.safeAreaInsets)")
                 background
-                    .safeAreaPadding(proxy.safeAreaInsets)
+//                    .safeAreaPadding(proxy.safeAreaInsets)
                     .dynamicOverlay(overlay
-                        .safeAreaPadding(proxy.safeAreaInsets))
-                    .dynamicOverlayBehavior(behavior)
+//                        .safeAreaPadding(proxy.safeAreaInsets)
+                                    , ignoresKeyboard: true)
+                    .dynamicOverlayBehavior(
+                        MagneticNotchOverlayBehavior<Notch> { notch in
+                            switch notch {
+                            case .max:
+                                return .topOffset(100)
+                            case .min:
+                                return .absolute(200)
+                            }
+                        }
+                    )
                     .ignoresSafeArea()
             }
-            .ignoresSafeArea(.keyboard)
+            .ignoresSafeArea(.keyboard, edges: .all)
             .safeAreaInset(edge: .bottom, alignment: .center, spacing: 20) {
                 Color.purple.frame(height: 40)
             }
@@ -66,13 +77,13 @@ struct MapRootView: View {
     }
 
     private var background: some View {
-        ZStack {
-            MapView()
-            BackdropView().opacity(state.progress)
+        VStack(spacing: 0.0) {
+            Color.gray.frame(height: 100)
+            Color.white
+            Color.gray.frame(height: 200)
         }
-        .ignoresSafeArea()
+        .background(Color.yellow.ignoresSafeArea())
     }
-
     private var overlay: some View {
         OverlayView { event in
             switch event {

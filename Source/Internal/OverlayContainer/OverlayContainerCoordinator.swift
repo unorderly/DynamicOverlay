@@ -112,9 +112,13 @@ extension OverlayContainerCoordinator: OverlayContainerViewControllerDelegate {
     // MARK: - OverlayContainerViewControllerDelegate
 
     func numberOfNotches(in containerViewController: OverlayContainerViewController) -> Int {
+        let safeArea = containerViewController.view.safeAreaInsets
+        let additionalSafearea = containerViewController.additionalSafeAreaInsets
+        print("safeArea: \(safeArea), additionalSafeArea: \(additionalSafearea)")
         indexMapper.reload(
             layout: state.layout,
-            availableHeight: containerViewController.availableSpace
+            availableHeight: containerViewController.availableSpace - safeArea.bottom - safeArea.top,
+            safeAreaInsets:  safeArea,
         )
         return indexMapper.numberOfOverlayIndexes()
     }

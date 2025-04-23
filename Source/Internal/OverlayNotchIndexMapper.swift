@@ -14,7 +14,7 @@ class OverlayNotchIndexMapper {
     private var overlayIndexToHeight: [Int: CGFloat] = [:]
     private var dynamicIndexToOverlayIndex: [Int: Int] = [:]
 
-    func reload(layout: OverlayContainerLayout, availableHeight: CGFloat) {
+    func reload(layout: OverlayContainerLayout, availableHeight: CGFloat, safeAreaInsets: UIEdgeInsets) {
         overlayIndexToDynamicIndex = [:]
         overlayIndexToHeight = [:]
         dynamicIndexToOverlayIndex = [:]
@@ -22,7 +22,7 @@ class OverlayNotchIndexMapper {
             height(for: $0.value, availableHeight: availableHeight) < height(for: $1.value, availableHeight: availableHeight)
         })
         sortedIndexes.enumerated().forEach{ overlayIndex, dynamicValue in
-            overlayIndexToHeight[overlayIndex] = height(for: dynamicValue.value, availableHeight: availableHeight)
+            overlayIndexToHeight[overlayIndex] = height(for: dynamicValue.value, availableHeight: availableHeight) + safeAreaInsets.bottom
             dynamicIndexToOverlayIndex[dynamicValue.key] = overlayIndex
             overlayIndexToDynamicIndex[overlayIndex] = dynamicValue.key
         }
@@ -46,11 +46,13 @@ class OverlayNotchIndexMapper {
 
     private func height(for dimension: NotchDimension,
                         availableHeight: CGFloat) -> CGFloat {
-        switch dimension.type {
-        case .absolute:
-            return CGFloat(dimension.value)
-        case .fractional:
-            return availableHeight * CGFloat(dimension.value)
+        switch dimension {
+        case .absolute(let value):
+            return CGFloat(value)
+        case .fractional(let value):
+            return availableHeight * CGFloat(value)
+        case .topOffset(let value):
+            return availableHeight - CGFloat(value)
         }
     }
 }
