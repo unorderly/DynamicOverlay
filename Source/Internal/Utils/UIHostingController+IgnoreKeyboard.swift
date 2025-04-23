@@ -5,7 +5,11 @@ extension UIHostingController {
         self.init(rootView: rootView)
 
         if ignoreSafeArea {
-            disableSafeArea()
+            if #available(iOS 16.4, *) {
+                self.safeAreaRegions = .container
+            } else {
+                disableSafeArea()
+            }
         }
     }
 
