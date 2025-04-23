@@ -16,8 +16,8 @@ public extension View {
     /// - parameter content: the content of the overlay.
     ///
     /// - returns: A view with a dynamic overlay added above this view.
-    func dynamicOverlay<Content: View>(_ content: Content, animateOverlayOverride: Bool? = nil, ignoresKeyboard: Bool = false) -> some View {
-        modifier(AddDynamicOverlayModifier(overlay: content, animateOverlayOverride: animateOverlayOverride, ignoresKeyboard: ignoresKeyboard))
+    func dynamicOverlay<Content: View>(_ content: Content, animateOverlayOverride: Bool? = nil, ignoresKeyboard: Bool = false, addionalSafeAreaInsets: EdgeInsets = .init()) -> some View {
+        modifier(AddDynamicOverlayModifier(overlay: content, animateOverlayOverride: animateOverlayOverride, ignoresKeyboard: ignoresKeyboard, addionalSafeAreaInsets: addionalSafeAreaInsets))
     }
 
     /// Sets the overlay behavior for dynamic overlays within this view.
@@ -37,6 +37,7 @@ public struct AddDynamicOverlayModifier<Overlay: View>: ViewModifier {
     let overlay: Overlay
     let animateOverlayOverride: Bool?
     let ignoresKeyboard: Bool
+    let addionalSafeAreaInsets: EdgeInsets
 
     // MARK: - ViewModifier
 
@@ -45,7 +46,8 @@ public struct AddDynamicOverlayModifier<Overlay: View>: ViewModifier {
             background: content,
             content: overlay,
             animateOverlayOverride: animateOverlayOverride,
-            ignoresKeyboard: ignoresKeyboard
+            ignoresKeyboard: ignoresKeyboard,
+            addionalSafeAreaInsets: addionalSafeAreaInsets
         )
     }
 }

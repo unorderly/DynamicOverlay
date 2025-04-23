@@ -32,28 +32,31 @@ struct MapRootView: View {
         HStack {
             TextField("Test", text: $text)
                 .frame(width: 200)
-            GeometryReader { proxy in
-                let _ = print("size: \(proxy.size), safeAreaInsets: \(proxy.safeAreaInsets)")
-                background
-//                    .safeAreaPadding(proxy.safeAreaInsets)
-                    .dynamicOverlay(overlay
-//                        .safeAreaPadding(proxy.safeAreaInsets)
-                                    , ignoresKeyboard: true)
-                    .dynamicOverlayBehavior(
-                        MagneticNotchOverlayBehavior<Notch> { notch in
-                            switch notch {
-                            case .max:
-                                return .topOffset(100)
-                            case .min:
-                                return .absolute(200)
+            GeometryReader { outerProxy in
+                GeometryReader { proxy in
+                    let _ = print("size: \(proxy.size), safeAreaInsets: \(proxy.safeAreaInsets)")
+                    background
+                    //                    .safeAreaPadding(proxy.safeAreaInsets)
+                        .dynamicOverlay(overlay
+                                        //                        .safeAreaPadding(proxy.safeAreaInsets)
+                                        , ignoresKeyboard: true, addionalSafeAreaInsets: .init(top: 0, leading: 0, bottom: proxy.safeAreaInsets.bottom - outerProxy.safeAreaInsets.bottom, trailing: 0))
+                        .dynamicOverlayBehavior(
+                            MagneticNotchOverlayBehavior<Notch> { notch in
+                                switch notch {
+                                case .max:
+                                    return .topOffset(100)
+                                case .min:
+                                    return .absolute(200)
+                                }
                             }
-                        }
-                    )
-                    .ignoresSafeArea()
-            }
-            .ignoresSafeArea(.keyboard, edges: .all)
-            .safeAreaInset(edge: .bottom, alignment: .center, spacing: 20) {
-                Color.purple.frame(height: 40)
+                        )
+                    //                    .safeAreaPadding(proxy.safeAreaInsets)
+                        .ignoresSafeArea()
+                }
+                .ignoresSafeArea(.keyboard, edges: .all)
+                .safeAreaInset(edge: .bottom, alignment: .center, spacing: 0) {
+                    Color.purple.opacity(0.5).frame(height: 40)
+                }
             }
         }
     }

@@ -23,11 +23,12 @@ struct OverlayView: View {
 
     var body: some View {
         VStack(spacing: 0.0) {
-            Color.red.frame(height: 100)
+            Color.red.frame(height: 200)
             Color.blue
             Color.green.frame(height: 100)
         }
-        .background(Color.yellow.ignoresSafeArea())
+        .opacity(0.8)
+        .background(Color.yellow.opacity(0.5).ignoresSafeArea())
     }
 
     // MARK: - Private

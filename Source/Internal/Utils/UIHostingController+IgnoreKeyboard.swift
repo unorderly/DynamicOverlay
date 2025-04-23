@@ -7,9 +7,10 @@ extension UIHostingController {
         if ignoreSafeArea {
             if #available(iOS 16.4, *) {
                 self.safeAreaRegions = .container
+//                self.additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: 40, right: 0)
             } else {
-                disableSafeArea()
             }
+//            disableSafeArea()
         }
     }
 
