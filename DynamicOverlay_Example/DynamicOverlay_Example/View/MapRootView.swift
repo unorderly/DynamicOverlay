@@ -39,7 +39,8 @@ struct MapRootView: View {
                     //                    .safeAreaPadding(proxy.safeAreaInsets)
                         .dynamicOverlay(overlay
                                         //                        .safeAreaPadding(proxy.safeAreaInsets)
-                                        , ignoresKeyboard: true, addionalSafeAreaInsets: .init(top: 0, leading: 0, bottom: proxy.safeAreaInsets.bottom - outerProxy.safeAreaInsets.bottom, trailing: 0))
+                                        , ignoresKeyboard: true,
+                                        addionalSafeAreaInsets: proxy.safeAreaInsets)
                         .dynamicOverlayBehavior(
                             MagneticNotchOverlayBehavior<Notch> { notch in
                                 switch notch {

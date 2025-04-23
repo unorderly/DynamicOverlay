@@ -46,6 +46,8 @@ class OverlayContainerCoordinator {
     private var state: State
     private let style: OverlayContainerViewController.OverlayStyle
     private let passiveContainer: OverlayContainerPassiveContainer
+    var outsideSafeAreaInsets: UIEdgeInsets = .zero
+
 
     private var animationController: DynamicOverlayContainerAnimationController {
         DynamicOverlayContainerAnimationController(style: style)
@@ -112,9 +114,13 @@ extension OverlayContainerCoordinator: OverlayContainerViewControllerDelegate {
     // MARK: - OverlayContainerViewControllerDelegate
 
     func numberOfNotches(in containerViewController: OverlayContainerViewController) -> Int {
+        containerViewController.additionalSafeAreaInsets = .init(top: self.outsideSafeAreaInsets.top - containerViewController.view.safeAreaInsets.top,
+                                                                 left: self.outsideSafeAreaInsets.left - containerViewController.view.safeAreaInsets.left,
+                                                                 bottom: self.outsideSafeAreaInsets.bottom - containerViewController.view.safeAreaInsets.bottom,
+                                                                 right: self.outsideSafeAreaInsets.right - containerViewController.view.safeAreaInsets.right)
         let safeArea = containerViewController.view.safeAreaInsets
         let additionalSafearea = containerViewController.additionalSafeAreaInsets
-        print("safeArea: \(safeArea), additionalSafeArea: \(additionalSafearea)")
+        print("safeArea: \(safeArea), additionalSafeArea: \(additionalSafearea), outsideSafeArea: \(outsideSafeAreaInsets)")
         indexMapper.reload(
             layout: state.layout,
             availableHeight: containerViewController.availableSpace - safeArea.bottom - safeArea.top,

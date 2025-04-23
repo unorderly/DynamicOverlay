@@ -54,7 +54,10 @@ struct OverlayContainerRepresentableAdaptor<Content: View, Background: View> {
 
     func updateUIViewController(_ container: OverlayContainerViewController,
                                 context: Context) {
-        container.additionalSafeAreaInsets = .init(top: addionalSafeAreaInsets.top, left: addionalSafeAreaInsets.leading, bottom: addionalSafeAreaInsets.bottom, right: addionalSafeAreaInsets.bottom)
+        context.coordinator.outsideSafeAreaInsets = .init(top: addionalSafeAreaInsets.top,
+                                                          left: addionalSafeAreaInsets.leading,
+                                                          bottom: addionalSafeAreaInsets.bottom,
+                                                          right: addionalSafeAreaInsets.trailing)
         context.coordinator.move(
             container,
             to: containerState,
