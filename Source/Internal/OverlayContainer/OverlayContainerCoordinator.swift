@@ -46,7 +46,6 @@ class OverlayContainerCoordinator {
     private var state: State
     private let style: OverlayContainerViewController.OverlayStyle
     private let passiveContainer: OverlayContainerPassiveContainer
-    var outsideSafeAreaInsets: UIEdgeInsets = .zero
 
 
     private var animationController: DynamicOverlayContainerAnimationController {
@@ -74,7 +73,6 @@ class OverlayContainerCoordinator {
               animated: Bool,
               animateOverlayOverride: Bool? = nil
     ) {
-        container.additionalSafeAreaInsets = self.outsideSafeAreaInsets - container.view.safeAreaInsets
         if container.viewControllers.isEmpty {
             container.viewControllers = [background, content]
         }

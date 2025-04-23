@@ -48,6 +48,7 @@ struct MapRootView: View {
                 .safeAreaInset(edge: .bottom, alignment: .center, spacing: 0) {
                     Color.purple.opacity(0.5).frame(height: 40)
                 }
+                .ignoresSafeArea(.keyboard)
         }
     }
 
@@ -75,7 +76,7 @@ struct MapRootView: View {
             Color.white
             Color.gray.frame(height: 200)
         }
-        .background(Color.yellow.ignoresSafeArea())
+        .background(Color.black.ignoresSafeArea())
     }
     private var overlay: some View {
         OverlayView { event in
@@ -87,9 +88,6 @@ struct MapRootView: View {
                 state.isEditing = false
                 withAnimation { state.notch = .min }
             }
-        }
-        .onGeometryChange(for: CGSize.self, of: \.size) { newValue in
-            print("size: \(newValue)")
         }
 //        .drivingScrollView()
     }

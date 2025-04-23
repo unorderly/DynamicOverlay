@@ -45,16 +45,16 @@ struct OverlayContainerRepresentableAdaptor<Content: View, Background: View> {
         )
     }
 
-    func makeUIViewController(context: Context) -> OverlayContainerViewController {
-        let controller = OverlayContainerViewController(style: style)
+    func makeUIViewController(context: Context) -> OverlayContainerViewControllerSafeArea {
+        let controller = OverlayContainerViewControllerSafeArea(style: style)
         controller.delegate = context.coordinator
 
         return controller
     }
 
-    func updateUIViewController(_ container: OverlayContainerViewController,
+    func updateUIViewController(_ container: OverlayContainerViewControllerSafeArea,
                                 context: Context) {
-        context.coordinator.outsideSafeAreaInsets = self.safeAreaInsets.uiEdgeInsets
+        container.outsideSafeAreaInsets = self.safeAreaInsets.uiEdgeInsets
         context.coordinator.move(
             container,
             to: containerState,

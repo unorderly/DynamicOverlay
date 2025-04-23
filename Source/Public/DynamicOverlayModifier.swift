@@ -49,7 +49,9 @@ public struct AddDynamicOverlayModifier<Overlay: View>: ViewModifier {
                 ignoresKeyboard: ignoresKeyboard,
                 safeAreaInsets: proxy.safeAreaInsets
             )
+            .ignoresSafeArea()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea(.keyboard, edges: ignoresKeyboard ? .all : [])
     }
 }

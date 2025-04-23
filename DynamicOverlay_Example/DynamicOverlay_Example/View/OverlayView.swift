@@ -22,17 +22,17 @@ struct OverlayView: View {
     // MARK: - View
 
     var body: some View {
-        VStack(spacing: 0) {
-            Color.cyan.frame(height: 20).opacity(0.8)
-            ScrollView {
+//        VStack(spacing: 0) {
+//            Color.cyan.frame(height: 20).opacity(0.8)
+//            ScrollView {
                 VStack(spacing: 0.0) {
-                    Color.red.frame(height: 200)
-                    Color.blue.frame(height: 500)
-                    Color.green.frame(height: 100)
+                    Color.red.frame(height: 50)
+                    Color.blue//.frame(height: 500)
+                    Color.green.frame(height: 50)
                 }
                 .opacity(0.8)
-            }
-        }
+//            }
+//        }
         .background(Color.yellow.opacity(0.5).ignoresSafeArea())
     }
 

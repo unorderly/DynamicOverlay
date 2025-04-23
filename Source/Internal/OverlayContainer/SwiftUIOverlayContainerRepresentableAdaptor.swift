@@ -20,11 +20,11 @@ struct SwiftUIOverlayContainerRepresentableAdaptor<Content: View, Background: Vi
         adaptor.makeCoordinator()
     }
 
-    func makeUIViewController(context: Context) -> OverlayContainerViewController {
+    func makeUIViewController(context: Context) -> OverlayContainerViewControllerSafeArea {
         adaptor.makeUIViewController(context: map(context))
     }
 
-    func updateUIViewController(_ uiViewController: OverlayContainerViewController, context: Context) {
+    func updateUIViewController(_ uiViewController: OverlayContainerViewControllerSafeArea, context: Context) {
         adaptor.updateUIViewController(uiViewController, context: map(context))
     }
 
